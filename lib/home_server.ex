@@ -4,10 +4,7 @@ defmodule HomeServer do
   """
 
   def endpoint_alive?(url) do
-    HTTPoison.get(url)
-    |> case do
-       {:ok, _} -> true
-       {:error, _} -> false
-    end
+    {status, _body} = HTTPoison.get(url)
+    status == :ok
   end
 end
