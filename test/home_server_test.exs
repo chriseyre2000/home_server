@@ -13,5 +13,4 @@ defmodule HomeServerTest do
   test "Can I call a non-existant website" do
     refute HomeServer.endpoint_alive?("https://#{random_name()}")
   end
-
 end

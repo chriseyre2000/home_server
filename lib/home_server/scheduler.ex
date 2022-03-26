@@ -4,14 +4,18 @@ defmodule HomeServer.Scheduler do
   defstruct interval_seconds: 5, function: &__MODULE__.empty/0
 
   def child_spec(id, args = %__MODULE__{}) do
+    IO.puts "Child spec called for #{id}"
+
     %{
       id: id,
       start: {
         HomeServer.Scheduler,
         :start_link,
-        [[
-          args
-        ]]
+        [
+          [
+            args
+          ]
+        ]
       }
     }
   end
