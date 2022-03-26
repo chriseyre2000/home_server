@@ -3,16 +3,11 @@ defmodule HomeServer do
   Documentation for `HomeServer`.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> HomeServer.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def endpoint_alive?(url) do
+    HTTPoison.get(url)
+    |> case do
+       {:ok, _} -> true
+       {:error, _} -> false
+    end
   end
 end

@@ -11,3 +11,9 @@ This runs a cowboy http server on port 1066
 It currently supports the endpoints /control and /shutdown
 
 The idea is to have this running in the background and to perform tasks on a regular basis.
+
+This is the utility that I installed
+
+```
+brew install terminal-notifier
+```
