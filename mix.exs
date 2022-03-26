@@ -14,7 +14,7 @@ defmodule HomeServer.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :telemetry, :httpoison],
+      extra_applications: [:logger, :telemetry],
       mod: {HomeServer.Application, []}
     ]
   end
