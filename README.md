@@ -1,21 +1,13 @@
 # HomeServer
 
-**TODO: Add description**
+This is a generalisation of a utility that I wrote for my work machine.
+The initial version was an application that would send me a desktop notification popup should the VPN client fail.
 
-## Installation
+This was my first experiment with mix release. I found it a bit awkward to shut down, but realised that I could add a simple
+web gui to enable a clean shutdown.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `home_server` to your list of dependencies in `mix.exs`:
+This runs a cowboy http server on port 1066
 
-```elixir
-def deps do
-  [
-    {:home_server, "~> 0.1.0"}
-  ]
-end
-```
+It currently supports the endpoints /control and /shutdown
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/home_server>.
-
+The idea is to have this running in the background and to perform tasks on a regular basis.
