@@ -6,27 +6,43 @@ defmodule HomeServer.Configurator do
   end
 
   def init(args) do
-    filename = "#{System.user_home()}/.home-server"
+    process_file()
+    {:ok, args}
+  end
+
+
+
+  defp process_file do
+    filename = "#{System.user_home()}/.home-server.yml"
 
     if File.exists?(filename) do
-      # This is dumb, I need a better file format
-      [url, time, title, message] = File.read!(filename) |> String.split("|")
-
-      {time_in_seconds, _} = Integer.parse(time)
-
-      DynamicSupervisor.start_child(
-        HomeServer.DynamicSupervisor,
-        HomeServer.Scheduler.child_spec(:"#{url}", %HomeServer.Scheduler{
-          interval_seconds: time_in_seconds,
-          function: fn ->
-            unless HomeServer.endpoint_alive?(url) do
-              HomeServer.desktop_notification(title, message)
-            end
-          end
-        })
-      )
+      YamlElixir.read_all_from_file!(filename)
+      |> hd()
+      |> configure_tasks()
     end
+  end
 
-    {:ok, args}
+  defp configure_tasks(data) do
+    for {k, v} <- data, do: configure_single_task(k, v)
+  end
+
+  defp configure_single_task(task_name, task_details) do
+
+    interval_seconds = task_details |> Map.get("interval_seconds")
+    url = task_details |> Map.get("test_url")
+    title = task_details |> Map.get("title")
+    message = task_details |> Map.get("message")
+
+    DynamicSupervisor.start_child(
+      HomeServer.DynamicSupervisor,
+      HomeServer.Scheduler.child_spec(:"#{task_name}", %HomeServer.Scheduler{
+        interval_seconds: interval_seconds,
+        function: fn ->
+          unless HomeServer.endpoint_alive?(url) do
+            HomeServer.desktop_notification(title, message)
+          end
+        end
+      })
+    )
   end
 end

@@ -23,7 +23,8 @@ defmodule HomeServer.MixProject do
   defp deps do
     [
       {:plug_cowboy, "~> 2.0"},
-      {:httpoison, "1.8.0"}
+      {:httpoison, "1.8.0"},
+      {:yaml_elixir, "~> 2.8"}
     ]
   end
 end

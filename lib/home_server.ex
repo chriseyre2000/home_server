@@ -9,6 +9,6 @@ defmodule HomeServer do
   end
 
   def desktop_notification(title, message) do
-    System.cmd("terminal-notifier", ["-message", message, "-title", title])
+    System.cmd("terminal-notifier", ["-message", "#{message}", "-title", "#{title}"])
   end
 end
