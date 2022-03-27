@@ -7,7 +7,8 @@ defmodule HomeServer.Application do
       # The web endpoints
       HomeServer.Router.child_spec(),
       # Checks that has internet connection
-      HomeServer.Scheduler.child_spec(HomeServer.NoOp, %HomeServer.Scheduler{
+      HomeServer.Scheduler.child_spec(HomeServer.NetworkUp, %HomeServer.Scheduler{
+        name: HomeServer.NetworkUp,
         interval_seconds: 10,
         function: &HomeServer.Checks.network_up/0
       }),

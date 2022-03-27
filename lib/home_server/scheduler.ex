@@ -1,11 +1,9 @@
 defmodule HomeServer.Scheduler do
   use GenServer
 
-  defstruct interval_seconds: 5, function: &__MODULE__.empty/0
+  defstruct interval_seconds: 5, function: &__MODULE__.empty/0, name: :nil
 
   def child_spec(id, args = %__MODULE__{}) do
-    IO.puts("Child spec called for #{id}")
-
     %{
       id: id,
       start: {
@@ -37,7 +35,7 @@ defmodule HomeServer.Scheduler do
   end
 
   def start_link(args) do
-    GenServer.start_link(__MODULE__, args)
+    GenServer.start_link(__MODULE__, args, name: args |> hd() |> Map.get(:name))
   end
 
   defp schedule_work(interval) do

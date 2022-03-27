@@ -12,8 +12,20 @@ It currently supports the endpoints /control and /shutdown
 
 The idea is to have this running in the background and to perform tasks on a regular basis.
 
-This is the utility that I installed
+This is the utility that needs to be installed for the notifications to work.
 
 ```
 brew install terminal-notifier
 ```
+
+There is an optional control file called `.home-server.yml` that need to live in the users home directory
+
+```
+bbc:
+  test_url: https://bbc.co.uk
+  interval_seconds: 60
+  title: BBC
+  message: Internet connection is down  
+```
+
+I am working on getting the process names to be defined so that :observer.start displays name processes.

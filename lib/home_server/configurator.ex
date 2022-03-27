@@ -2,15 +2,13 @@ defmodule HomeServer.Configurator do
   use GenServer
 
   def start_link(args) do
-    GenServer.start_link(__MODULE__, args)
+    GenServer.start_link(__MODULE__, args, name: __MODULE__)
   end
 
   def init(args) do
     process_file()
     {:ok, args}
   end
-
-
 
   defp process_file do
     filename = "#{System.user_home()}/.home-server.yml"
@@ -36,6 +34,7 @@ defmodule HomeServer.Configurator do
     DynamicSupervisor.start_child(
       HomeServer.DynamicSupervisor,
       HomeServer.Scheduler.child_spec(:"#{task_name}", %HomeServer.Scheduler{
+        name: :"#{task_name}",
         interval_seconds: interval_seconds,
         function: fn ->
           unless HomeServer.endpoint_alive?(url) do
