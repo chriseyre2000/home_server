@@ -11,19 +11,12 @@ defmodule HomeServer.Application do
         interval_seconds: 10,
         function: &HomeServer.Checks.network_up/0
       }),
-      #DynamicSupervisor: allows other tasks to be added.
-      {DynamicSupervisor, strategy: :one_for_one, name: HomeServer.DynamicSupervisor}
+      # DynamicSupervisor: allows other tasks to be added.
+      {DynamicSupervisor, strategy: :one_for_one, name: HomeServer.DynamicSupervisor},
+      HomeServer.Configurator
     ]
 
     opts = [strategy: :one_for_one, name: HomeServer.Supervisor]
-    res = Supervisor.start_link(children, opts)
-
-    Task.start(fn ->
-      Process.sleep(5_000)
-      #This will check for a ~/.home-server file and parse it
-      HomeServer.Configurator.init()
-    end)
-
-    res
+    Supervisor.start_link(children, opts)
   end
 end

@@ -1,5 +1,11 @@
 defmodule HomeServer.Configurator do
-  def init do
+  use GenServer
+
+  def start_link(args) do
+    GenServer.start_link(__MODULE__, args)
+  end
+
+  def init(args) do
     filename = "#{System.user_home()}/.home-server"
 
     if File.exists?(filename) do
@@ -20,5 +26,7 @@ defmodule HomeServer.Configurator do
         })
       )
     end
+
+    {:ok, args}
   end
 end
