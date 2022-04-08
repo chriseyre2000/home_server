@@ -33,3 +33,11 @@ You can have multiple of these block (but the names must be unique).
 To test a vpn find an http get url that is only visible when the vpn is up!
 
 I am working on getting the process names to be defined so that :observer.start displays name processes.
+
+To get this started run:
+
+```
+mix deps.get # First time only
+
+iex -S mix
+```
